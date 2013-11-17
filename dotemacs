@@ -59,6 +59,9 @@
 ; stop creating those #autosave# files
 (setq auto-save-default nil)
 
+; automatically complete tags
+(setq nxml-slash-auto-complete-flag t)
+
 ; keep a list of recent files
 (recentf-mode 1)
 
