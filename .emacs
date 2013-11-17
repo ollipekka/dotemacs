@@ -1,11 +1,14 @@
 ;; Hide tool bar
 (if (functionp 'tool-bar-mode) (tool-bar-mode 0))
 
-; disable bell
- (setq ring-bell-function 'ignore)
+; disable audio bell
+(setq ring-bell-function 'ignore)
 
 ; disable scroll bars
 (if (functionp 'tool-bar-mode) (scroll-bar-mode -1))
+
+; disable menu bar
+; (if (functionp 'tool-bar-mode) (menu-bar-mode -1))
 
 ; turn on paren match highlighting
 (show-paren-mode 1)
@@ -19,9 +22,11 @@
 ;  delete seleted text when typing
 (delete-selection-mode 1)
 
+; no start up messages
+(setq inhibit-startup-echo-area-message t)
+
 ; no start up screen
 (setq inhibit-startup-message t)
-
 ; Start in home dir instead of root.
 (setq default-directory "~/")
 
@@ -57,20 +62,14 @@
 ; keep a list of recent files
 (recentf-mode 1)
 
-; set F7 to list recently opened file
-(global-set-key (kbd "<f7>") 'recentf-open-files)
-
-; set
-(global-set-key (kbd "<f5>") 'sort-lines)
 ; custom theme folder.
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'zenburn t)
 
 ; white space mode
-(global-whitespace-mode 1)
 (setq whitespace-style (quote (spaces tabs newline space-mark tab-mark newline-mark)))
 
-; Use pilcrow for endline.
+; Use don't use pilcrow or dollar for endline.
 (setq whitespace-display-mappings
       ;; all numbers are Unicode codepoint in decimal. try (insert-char 182 ) to see it
       '(
@@ -78,3 +77,16 @@
         (newline-mark 10 [8629 10]) ; 10 LINE FEED
         (tab-mark 9 [9655 9] [92 9]) ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
         ))
+
+
+
+; Keyboard shortcuts
+
+; set F7 to list recently opened file.
+(global-set-key (kbd "<f7>") 'recentf-open-files)
+
+; set F5 to stort lines.
+(global-set-key (kbd "<f5>") 'sort-lines)
+
+; set F9 to toggle whitespace mode
+(global-set-key (kbd "<f9>") 'whitespace-mode)
