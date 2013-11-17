@@ -1,6 +1,9 @@
 ;; Hide tool bar
 (if (functionp 'tool-bar-mode) (tool-bar-mode 0))
 
+; disable bell
+ (setq ring-bell-function 'ignore)
+
 ; disable scroll bars
 (if (functionp 'tool-bar-mode) (scroll-bar-mode -1))
 
