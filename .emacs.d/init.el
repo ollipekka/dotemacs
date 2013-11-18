@@ -5,10 +5,14 @@
 (setq ring-bell-function 'ignore)
 
 ; disable scroll bars
-(if (functionp 'tool-bar-mode) (scroll-bar-mode -1))
+(if (functionp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-; disable menu bar
-; (if (functionp 'tool-bar-mode) (menu-bar-mode -1))
+
+; disable menu bar in non-osx systems
+(unless (eq system-type 'darwin)
+    (if (functionp 'menu-bar-mode) (menu-bar-mode -1))
+)
+
 
 ; turn on paren match highlighting
 (show-paren-mode 1)
