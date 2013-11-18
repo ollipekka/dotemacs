@@ -1,8 +1,7 @@
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; Hide tool bar
 (if (functionp 'tool-bar-mode) (tool-bar-mode 0))
-
-; disable audio bell
-(setq ring-bell-function 'ignore)
 
 ; disable scroll bars
 (if (functionp 'scroll-bar-mode) (scroll-bar-mode -1))
@@ -11,6 +10,9 @@
 (unless (eq system-type 'darwin)
     (if (functionp 'menu-bar-mode) (menu-bar-mode -1))
 )
+
+; disable audio bell
+(setq ring-bell-function 'ignore)
 
 ; turn on paren match highlighting
 (show-paren-mode 1)
@@ -32,6 +34,12 @@
 ; Start in home dir instead of root.
 (setq default-directory "~/")
 
+; Use utf-8
+(prefer-coding-system       'utf-8)
+(set-default-coding-systems 'utf-8)
+(setq coding-system-for-read 'utf-8)
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+
 ; never use tabs
 (setq-default indent-tabs-mode nil)
 
@@ -39,12 +47,16 @@
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
-; comment region
-(global-set-key (kbd "C-c n") 'comment-region)
-(global-set-key (kbd "C-c m") 'uncomment-region)
-
-;; js2-mode for javascript
+; js2-mode for javascript
 (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+
+; Auto load markdown-mode
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
 
 ; Remove trailing whitepsace on save.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -82,8 +94,6 @@
         (newline-mark 10 [8629 10]) ; 10 LINE FEED
         (tab-mark 9 [9655 9] [92 9]) ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
         ))
-
-
 
 ; Keyboard shortcuts
 
