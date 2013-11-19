@@ -105,3 +105,7 @@
 
 ; set F9 to toggle whitespace mode
 (global-set-key (kbd "<f9>") 'whitespace-mode)
+
+
+; Font size to 15pt
+(set-face-attribute 'default nil :height 130)
