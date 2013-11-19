@@ -109,3 +109,12 @@
 
 ; Font size to 15pt
 (set-face-attribute 'default nil :height 130)
+
+; Convert dos-line endings to unix.
+(add-hook 'find-file-hook 'find-file-check-line-endings)
+(defun dos-file-endings-p ()
+  (string-match "dos" (symbol-name buffer-file-coding-system)))
+(defun find-file-check-line-endings ()
+  (when (dos-file-endings-p)
+    (set-buffer-file-coding-system 'undecided-unix)
+    (set-buffer-modified-p nil)))
