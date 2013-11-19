@@ -95,18 +95,6 @@
         (tab-mark 9 [9655 9] [92 9]) ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
         ))
 
-; Keyboard shortcuts
-
-; set F7 to list recently opened file.
-(global-set-key (kbd "<f7>") 'recentf-open-files)
-
-; set F5 to stort lines.
-(global-set-key (kbd "<f5>") 'sort-lines)
-
-; set F9 to toggle whitespace mode
-(global-set-key (kbd "<f9>") 'whitespace-mode)
-
-
 ; Font size to 15pt
 (set-face-attribute 'default nil :height 130)
 
@@ -118,3 +106,17 @@
   (when (dos-file-endings-p)
     (set-buffer-file-coding-system 'undecided-unix)
     (set-buffer-modified-p nil)))
+
+; save sessions
+(desktop-save-mode 1)
+
+; Keyboard shortcuts
+
+; set F7 to list recently opened file.
+(global-set-key (kbd "<f7>") 'recentf-open-files)
+
+; set F5 to stort lines.
+(global-set-key (kbd "<f5>") 'sort-lines)
+
+; set F9 to toggle whitespace mode
+(global-set-key (kbd "<f9>") 'whitespace-mode)
