@@ -11,6 +11,18 @@
     (if (functionp 'menu-bar-mode) (menu-bar-mode -1))
 )
 
+(when (eq system-type 'darwin)
+  (progn 
+    (defun aq-binding (any) nil)
+    (load  "~/.emacs.d/lisp/aquamacs-tools.el")
+    (load  "~/.emacs.d/lisp/emulate-mac-keyboard-mode.el")
+    (setq emulate-mac-finnish-keyboard-mode t)
+    (setq mac-right-option-modifier nil)
+    )
+  )
+
+
+
 ; disable audio bell
 (setq ring-bell-function 'ignore)
 
