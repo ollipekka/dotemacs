@@ -12,7 +12,7 @@
 )
 
 (when (eq system-type 'darwin)
-  (progn 
+  (progn
     (defun aq-binding (any) nil)
     (load  "~/.emacs.d/lisp/aquamacs-tools.el")
     (load  "~/.emacs.d/lisp/emulate-mac-keyboard-mode.el")
@@ -47,10 +47,10 @@
 (setq default-directory "~/")
 
 ; Use utf-8
-(prefer-coding-system       'utf-8)
-(set-default-coding-systems 'utf-8)
-(setq coding-system-for-read 'utf-8)
-(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+;(prefer-coding-system       'utf-8)
+;(set-default-coding-systems 'utf-8)
+;(setq coding-system-for-read 'utf-8)
+;(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 
 ; never use tabs
 (setq-default indent-tabs-mode nil)
@@ -59,15 +59,15 @@
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
-; js2-mode for javascript
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
 ; Auto load markdown-mode
-(autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
+(autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+; Add handlebars to html autoload.
+(add-to-list 'auto-mode-alist '("\\.hbs\\'" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.handlebars\\'" . html-mode))
 
 
 ; Remove trailing whitepsace on save.
@@ -111,16 +111,55 @@
 (set-face-attribute 'default nil :height 130)
 
 ; Convert dos-line endings to unix.
-(add-hook 'find-file-hook 'find-file-check-line-endings)
-(defun dos-file-endings-p ()
-  (string-match "dos" (symbol-name buffer-file-coding-system)))
-(defun find-file-check-line-endings ()
-  (when (dos-file-endings-p)
-    (set-buffer-file-coding-system 'undecided-unix)
-    (set-buffer-modified-p nil)))
+;(add-hook 'find-file-hook 'find-file-check-line-endings)
+;(defun dos-file-endings-p ()
+;  (string-match "dos" (symbol-name buffer-file-coding-system)))
+;(defun find-file-check-line-endings ()
+;  (when (dos-file-endings-p)
+;    (set-buffer-file-coding-system 'undecided-unix)
+;    (set-buffer-modified-p nil)))
 
 ; save sessions
-(desktop-save-mode 1)
+;; use only one desktop
+(setq desktop-path '("~/.emacs.d/"))
+(setq desktop-dirname "~/.emacs.d/")
+(setq desktop-base-file-name "emacs-desktop")
+
+;; remove desktop after it's been read
+(add-hook 'desktop-after-read-hook
+	  '(lambda ()
+	     ;; desktop-remove clears desktop-dirname
+	     (setq desktop-dirname-tmp desktop-dirname)
+	     (desktop-remove)
+	     (setq desktop-dirname desktop-dirname-tmp)))
+
+(defun saved-session ()
+  (file-exists-p (concat desktop-dirname "/" desktop-base-file-name)))
+
+;; use session-restore to restore the desktop manually
+(defun session-restore ()
+  "Restore a saved emacs session."
+  (interactive)
+  (if (saved-session)
+      (desktop-read)
+    (message "No desktop found.")))
+
+;; use session-save to save the desktop manually
+(defun session-save ()
+  "Save an emacs session."
+  (interactive)
+  (if (saved-session)
+      (if (y-or-n-p "Overwrite existing desktop? ")
+	  (desktop-save-in-desktop-dir)
+	(message "Session not saved."))
+  (desktop-save-in-desktop-dir)))
+
+;; ask user whether to restore desktop at start-up
+(add-hook 'after-init-hook
+	  '(lambda ()
+	     (if (saved-session)
+		 (if (y-or-n-p "Restore desktop? ")
+		     (session-restore)))))
 
 ; Keyboard shortcuts
 
