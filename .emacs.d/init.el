@@ -59,6 +59,9 @@
 (setq-default tab-width 4)
 (setq indent-line-function 'insert-tab)
 
+; Open .json with js-mode.
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js-mode))
+
 ; Auto load markdown-mode
 (autoload 'markdown-mode "markdown-mode" "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
