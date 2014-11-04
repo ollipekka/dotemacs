@@ -72,6 +72,12 @@
 (add-to-list 'auto-mode-alist '("\\.hbs\\'" . html-mode))
 (add-to-list 'auto-mode-alist '("\\.handlebars\\'" . html-mode))
 
+; Guess indent width.
+(add-hook 'sgml-mode-hook
+        (lambda ()
+          ;; Default indentation to 2, but let SGML mode guess, too.
+          (set (make-local-variable 'sgml-basic-offset) 2)
+          (sgml-guess-indent)))
 
 ; Remove trailing whitepsace on save.
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
